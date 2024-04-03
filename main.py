@@ -2,7 +2,7 @@ import os
 import logging
 from pathlib import Path
 from datetime import datetime
-from src import uuid_generator, qr_generator
+from src import generate_qr, generate_uuid
 
 
 logging.basicConfig(
@@ -13,18 +13,18 @@ logging.basicConfig(
 
 def main():
     try:
-        uuid = uuid_generator()
+        uuid = generate_uuid()
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
         uuid_dir = os.path.join(base_dir, "assets", str(uuid))
 
-        Path(uuid_dir).mkdir(parents=True, exists_ok=False)
+        Path(uuid_dir).mkdir(parents=True, exist_ok=False)
         logging.info("Directory created: %s", uuid_dir)
 
         qr_file = os.path.join(uuid_dir, f"{uuid}.png")
         data_file = os.path.join(uuid_dir, "data.txt")
 
-        qr_generator(qr_file)
+        generate_qr(uuid, qr_file)
         logging.info("QR code saved: %s", qr_file)
 
         with open(data_file, "w") as file:
