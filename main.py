@@ -16,7 +16,7 @@ def main():
         uuid = generate_uuid()
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        uuid_dir = os.path.join(base_dir, "assets", str(uuid))
+        uuid_dir = os.path.join(base_dir, "output", str(uuid))
 
         Path(uuid_dir).mkdir(parents=True, exist_ok=False)
         logging.info("Directory created: %s", uuid_dir)
