@@ -1,7 +1,20 @@
 #!/usr/bin/bash
 
+
+ENV_PATH="$(pwd)/venv"
 INC=0
 NUM=1
+
+
+if [ -d "$ENV_PATH" ]; then 
+    echo "Activating virtual environment"
+    source "$ENV_PATH/Scripts/activate"
+else
+    echo "Creating virtual environment"
+    virtualenv "$ENV_PATH"
+    source "$ENV_PATH/Scripts/activate"
+    pip install -r "$(pwd)/requirements.txt"
+fi
 
 
 if [ -n "$1" ]; then 
@@ -9,7 +22,6 @@ if [ -n "$1" ]; then
 fi
 
 echo "Creating $NUM UUID..."
-source venv/scripts/activate
 
 while [ $INC -lt $NUM ]; do
     python main.py
@@ -17,5 +29,6 @@ while [ $INC -lt $NUM ]; do
 done
 
 deactivate
+
 
 exec "$@"
